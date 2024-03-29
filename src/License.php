@@ -10,7 +10,7 @@ namespace Licenser;
 class License {
 
     /**
-     * AppSero\Client
+     * Licenser\Client
      *
      * @var object
      */
