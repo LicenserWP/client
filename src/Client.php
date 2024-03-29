@@ -189,7 +189,7 @@ class Client {
      * @return string
      */
     public function endpoint() {
-        $endpoint = apply_filters( 'appsero_endpoint', $this->api_url . '/wp-json/licenser/v1/public' );
+        $endpoint = apply_filters( 'licenser_endpoint', $this->api_url . '/wp-json/licenser/v1/public' );
 
         return trailingslashit( $endpoint );
     }
@@ -266,7 +266,7 @@ class Client {
     public function is_local_server() {
         $is_local = isset( $_SERVER['REMOTE_ADDR'] ) && in_array( $_SERVER['REMOTE_ADDR'], [ '127.0.0.1', '::1' ], true );
 
-        return apply_filters( 'appsero_is_local', $is_local );
+        return apply_filters( 'licenser_is_local', $is_local );
     }
 
     /**

@@ -84,7 +84,41 @@ class License {
 
         // Active/Deactive corn schedule
         $this->run_schedule();
+
+        // Temp Hook for Migration from old version
+        if ( get_option( $this->client->slug . '_key' ) && ! wp_next_scheduled( $this->client->slug . '-upgrade_complete' ) ) {
+            wp_schedule_single_event( time() + 20, $this->client->slug . '-upgrade_complete', array([
+                'option_key' => $this->option_key,
+                'plugin_slug' => $this->client->slug,
+            ]) );
+        }
+
+        // Temp Hook for License Upgrade
+        add_action( $this->client->slug . '-upgrade_complete', [ $this, 'upgrade_complete' ] );
     }
+
+	// License Upgrade
+	function upgrade_complete( $args ){
+		error_log( print_r( $args, true ) );
+		$plugin_slug = isset( $args['plugin_slug'] ) ? $args['plugin_slug'] : '';
+
+		// Get Old Key
+		$old_key = get_option( $plugin_slug . '_key' );
+		$old_status = get_option( $plugin_slug . '_key_status' );
+
+		// Update License
+		if( $old_key ){
+			$license_args = array(
+				'key' => $old_key,
+				'status' => 'activate',
+			);
+			update_option( $args['option_key'], $license_args );
+
+			// Delete Old Key
+			delete_option( $plugin_slug . '_key' );
+			delete_option( $plugin_slug . '_key_status' );
+		}
+	}
 
     /**
      * Set the license option key.
