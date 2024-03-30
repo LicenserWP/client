@@ -3,7 +3,7 @@ Licenser Update Check Client for WordPress Theme &amp; Plugin
 
 ## Installation
 ```
-https://github.com/akshuvo/licenser-client.git licenser
+git clone https://github.com/akshuvo/licenser-client.git licenser
 ```
 
 # Credits

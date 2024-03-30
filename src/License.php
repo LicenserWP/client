@@ -99,7 +99,6 @@ class License {
 
 	// License Upgrade
 	function upgrade_complete( $args ){
-		error_log( print_r( $args, true ) );
 		$plugin_slug = isset( $args['plugin_slug'] ) ? $args['plugin_slug'] : '';
 
 		// Get Old Key
